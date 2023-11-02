@@ -3,8 +3,10 @@ from django.contrib.auth.models import User, auth
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Profile
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+@login_required(login_url='signin')
 def index(request):
     return render(request,'index.html')
 
@@ -55,7 +57,11 @@ def signin(request):
     else:
         return render(request,'signin.html')
     
-
+@login_required(login_url='signin')
 def logout(request):
     auth.logout(request)
     return redirect('signin')
+
+@login_required(login_url='signin')
+def settings(request):
+    return render(request,'setting.html')
